@@ -6,15 +6,14 @@ class Node(object):
         self.height = 1
 
 class AvlMethods(object):
-    def insert(self, root, key): 
+    def insert(self, root, data): 
       
-        #  BST 
         if not root: 
-            return Node(key) 
-        elif key < root.val: 
-            root.left = self.insert(root.left, key) 
+            return Node(data) 
+        elif data < root.val: 
+            root.left = self.insert(root.left, data) 
         else: 
-            root.right = self.insert(root.right, key) 
+            root.right = self.insert(root.right, data) 
   
         # Update the height  
         
@@ -27,25 +26,83 @@ class AvlMethods(object):
        
         
         #Left Left 
-        if balance > 1 and key < root.left.val: 
+        if balance > 1 and data < root.left.val:
+            print("Left-Left Rotation")
             return self.rightRotate(root) 
   
         #Right Right 
-        if balance < -1 and key > root.right.val: 
+        if balance < -1 and data > root.right.val:
+            print("Right-Right Rotation")
             return self.leftRotate(root) 
   
         #Left Right 
-        if balance > 1 and key > root.left.val: 
+        if balance > 1 and data > root.left.val:
+            print("Left-Right Rotation")
             root.left = self.leftRotate(root.left) 
             return self.rightRotate(root) 
   
         #Right Left 
-        if balance < -1 and key < root.right.val: 
+        if balance < -1 and data < root.right.val:
+            print("Right-Left Rotation")
             root.right = self.rightRotate(root.right) 
             return self.leftRotate(root) 
   
-        return root 
+        return root
+
+    def delete(self, root, data): 
   
+        if not root: 
+            return root 
+  
+        elif data < root.val: 
+            root.left = self.delete(root.left, data) 
+  
+        elif data > root.val: 
+            root.right = self.delete(root.right, data) 
+  
+        else:
+            if root.left is None and root.right is None:
+                return None
+            if root.left is None: 
+                return root.right 
+  
+            elif root.right is None: 
+                return root.left
+  
+            root.val = minNode(root.right) 
+            root.right = self.delete(root.right, root.val)
+               
+         
+        root.height = 1 + max(self.getHeight(root.left), self.getHeight(root.right)) 
+  
+            #balance factor 
+        balance = self.getBalance(root) 
+      
+            
+            # Left Left 
+        if balance > 1 and self.getBalance(root.left) >= 0:
+            print("Left-Left Rotation")
+            return self.rightRotate(root) 
+      
+            # Right Right 
+        if balance < -1 and self.getBalance(root.right) <= 0:
+            print("Right-Right Rotation")
+            return self.leftRotate(root) 
+      
+            #  Left Right 
+        if balance > 1 and self.getBalance(root.left) < 0:
+            print("Left-Right Rotation")
+            root.left = self.leftRotate(root.left) 
+            return self.rightRotate(root) 
+      
+            # Right Left 
+        if balance < -1 and self.getBalance(root.right) > 0:
+                print("Right-Left Rotation")
+                root.right = self.rightRotate(root.right) 
+                return self.leftRotate(root) 
+      
+        return root 
+      
     def leftRotate(self, z): 
   
         y = z.right 
@@ -92,7 +149,14 @@ class AvlMethods(object):
         if not root: 
             return 0
   
-        return self.getHeight(root.left) - self.getHeight(root.right) 
+        return self.getHeight(root.left) - self.getHeight(root.right)
+
+    def minNode(self, root): 
+        if root is None or root.left is None: 
+            return root 
+  
+        return self.minNode(root.left)
+    
   
     def display(self, root, indent, last): 
   
@@ -115,8 +179,11 @@ root = None
   
 root = avl.insert(root, 10) 
 root = avl.insert(root, 20) 
-root = avl.insert(root, 30) 
+root = avl.insert(root, 30)
+print("Resultant tree after insertion: ")
+avl.display(root, "", True) 
+root = avl.delete(root, 30) 
 
-print("Resultant tree: ") 
+print("Resultant tree after deletion: ") 
 avl.display(root, "", True) 
 print()
