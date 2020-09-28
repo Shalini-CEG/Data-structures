@@ -117,9 +117,6 @@ root = avl.insert(root, 10)
 root = avl.insert(root, 20) 
 root = avl.insert(root, 30) 
 
-
-  
- 
 print("Resultant tree: ") 
 avl.display(root, "", True) 
 print()
