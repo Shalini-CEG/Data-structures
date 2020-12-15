@@ -46,6 +46,17 @@ class LMethods{
         System.out.println("Deleted elt at position "+ pos);
 
     }
+    
+    public void findMidElement(){
+        Node slow = head;
+        Node fast = head;
+
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        System.out.println("Middle element is " + slow.data);
+    }
 
     public void displayList(){
         Node temp = head;
@@ -111,5 +122,7 @@ public class LinkedList {
 
         fun.reverseList();
         fun.displayList();
+        
+        fun.findMidElement();
     }
 }
