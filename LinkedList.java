@@ -60,6 +60,23 @@ class LMethods{
 
     }
 
+    public void reverseList(){
+        Node prev = null;
+        Node next;
+        Node current = head;
+
+        while(current != null){
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        head = prev;
+
+        System.out.println("List reversed successfully with new head " + prev.data);
+    }
+
     public void search(int data){
         Node temp = head;
 
@@ -91,5 +108,8 @@ public class LinkedList {
 
         fun.search(70);
         fun.search(20);
+
+        fun.reverseList();
+        fun.displayList();
     }
 }
