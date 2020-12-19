@@ -1,4 +1,4 @@
-class sortedInsertCLL
+class SortedInsertCLL
 {
 	public static Node sortedInsert(Node head,int data)
          {
