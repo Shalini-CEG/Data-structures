@@ -100,7 +100,7 @@ class LMethods{
     }
 }
 
-public class LinkedList {
+public class Llist {
     public static void main(String[] args) {
         LMethods fun = new LMethods();
 
